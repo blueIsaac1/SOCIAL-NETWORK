@@ -12,5 +12,4 @@ router = APIRouter(
 @router.post('/')
 async def my_informations(n):
 
-
     return {'logado': 'zz'}
