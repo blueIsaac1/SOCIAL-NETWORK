@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "social-network"
+version = "0.1.0"
+description = ""
+authors = ["blueisaac1"]
+readme = "README.md"
+packages = [{include = "*"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.115.4"}
+sh = "^2.1.0"
+tortoise-orm = {extras = ["asyncpg"], version = "^0.21.7"}
+
+
+[tool.poetry.group.dev.dependencies]
+taskipy = "^1.14.0"
+
+[tool.taskipy.tasks]
+dev = "fastapi dev dev.py"
+prod = "uvicorn src.api.app:app --host 0.0.0.0 --port 8000 --reload"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
