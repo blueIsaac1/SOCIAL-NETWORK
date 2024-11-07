@@ -37,8 +37,8 @@ async def login(body: UserLogin):
     
     return {'sucess': user}
 
-# @router.get('/get-users')
-# async def get_users():
-#     user = await UserModel.all()
-#     return {'users': user}
+@router.get('/get-users')
+async def get_users():
+    user = await UserModel.all()
+    return {'users': user}
 
