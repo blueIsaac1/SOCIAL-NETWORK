@@ -1,5 +1,5 @@
 # from dataclasses import dataclass
-
+from src.datalayer.models.user import UserModel
 from src.api.exception.user import email_already_exists, login_wrong_exception
 
 class UserService:
