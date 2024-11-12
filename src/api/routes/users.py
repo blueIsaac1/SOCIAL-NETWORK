@@ -1,7 +1,7 @@
-from fastapi import APIRouter
-from src.api.dtos.users import *
-from src.datalayer.models.user import *
-from src.api.exception.user import *
+from fastapi import APIRouter, Depends
+from src.api.dtos.users import UserRegistrations, UserLogin
+from src.services.user import UserService
+from typing import Annotated
 
 router = APIRouter(
     prefix="/users",
@@ -10,35 +10,26 @@ router = APIRouter(
 )
 
 @router.post('/register')
-async def register(body: UserRegistrations):
+async def register(body: UserRegistrations, service: Annotated[UserService, Depends(UserService)]):
+    
+    register_user = await service.register(
+        name = body.name, 
+        email = body.email, 
+        password = body.password)
+    
+    return {'created': register_user}
 
-    email_exists = await UserModel.filter(email=body.email)
-    if email_exists:
-        raise email_already_exists()
+@router.post('/login')
+async def login(body: UserLogin, service: Annotated[UserService, Depends(UserService)]):
 
-    user = await UserModel.create(
-        name = body.name,
+    login_user = await service.login(
         email = body.email,
         password = body.password
     )
-    return {'created': user}
 
-@router.post('/login')
-async def login(body: UserLogin):
-    user = None
-
-    try: 
-        user = await UserModel.get(email=body.email)
-    except Exception as e:
-        raise login_wrong_exception()
-
-    if user.password != body.password:
-        raise login_wrong_exception()
-    
-    return {'sucess': user}
+    return {'sucess': login_user}
 
 @router.get('/get-users')
-async def get_users():
-    user = await UserModel.all()
-    return {'users': user}
+async def get_users(service: Annotated[UserService, Depends(UserService)]):
+    return service.get_all_users()
 

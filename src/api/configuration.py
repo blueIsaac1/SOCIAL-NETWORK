@@ -1,10 +1,11 @@
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi import FastAPI
-from src.api.routes import users, home
+from src.api.routes import users, home, posts
 
 def configure_routes(app: FastAPI):
     app.include_router(users.router)
-    app.include_router(home.router)
+    app.include_router(home.router),
+    app.include_router(posts.router)
 
 def configure_db(app: FastAPI):
     register_tortoise(
@@ -23,7 +24,8 @@ def configure_db(app: FastAPI):
             "apps": {
                 "models": {
                     "models": [
-                        "src.datalayer.models.user"
+                        "src.datalayer.models.user",
+                        "src.datalayer.models.posts"
                     ],
                     # If no default_connection specified, defaults to "default"
                     "default_connection": "default",

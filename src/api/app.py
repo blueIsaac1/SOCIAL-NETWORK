@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.api.configuration import *
+from src.api.configuration import configure_routes, configure_db
 
 def create_app():
     app = FastAPI()

@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends
-from src.api.dtos.users import *
-from src.datalayer.models.user import *
-from src.api.exception.user import *
+from src.datalayer.models.user import UserModel
+from src.api.authentication import verify_token
 from typing import Annotated
-from src.api.authentication import *
+
 
 router = APIRouter(
     prefix="/me",

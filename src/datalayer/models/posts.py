@@ -1,10 +1,10 @@
 from tortoise.models import Model
 from tortoise import fields
-from src.datalayer.models.user import UserModel
+from src.datalayer.models.base import ModelBase
 
-class PostModel(Model):
-    id = fields.IntField(primary_key=True)
-    message = fields.TextField()
+class PostModel(ModelBase):
     user = fields.ForeignKeyField('models.UserModel', related_name='posts')
+    message = fields.TextField()
+    
     
     
