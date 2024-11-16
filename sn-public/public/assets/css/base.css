@@ -1,0 +1,14 @@
+html, body{
+    margin: 0
+}
+
+body{
+    background-color: #000;
+    color: #fff
+}
+
+.card{
+    padding: 5rem;
+    margin: 5rem;
+    border: 1px solid white;
+}
