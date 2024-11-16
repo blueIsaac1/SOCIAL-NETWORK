@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends # type: ignore
 from src.api.dtos.posts import PostsRegistration
-from src.datalayer.models.posts import PostModel
-from src.datalayer.models.user import UserModel
 from typing import Annotated
+from src.services.post import *
 from src.api.authentication import verify_token
+
 
 router = APIRouter(
     prefix="/posts",
@@ -12,24 +12,22 @@ router = APIRouter(
 )
 
 @router.post('/create')
-async def create_post(body: PostsRegistration, current_user: Annotated[UserModel, Depends(verify_token)]):
+async def create_post(body: PostsRegistration, 
+    current_user: Annotated[UserModel, Depends(verify_token)], 
+    service: Annotated[PostService, Depends(PostService)]):
+    
+    post = await service.create_post(user=current_user, message=body.message)
 
-    post = await PostModel.create(
-        user = current_user,
-        message = body.message
-    )
-    return {'created': post}
+    return {'post': post}
 
 @router.get('/get-posts')
-async def get_posts():
-    posts = await PostModel.all()
-    return {'posts': posts}
+async def get_all_posts(service: Annotated[PostService, Depends(PostService)]):
+    return await service.get_all_posts()
 
 
 @router.get('/{user_id}')
-async def get_posts_by_user(user_id: int):
-    post_by_user = await PostModel.filter(user_id=user_id)
-    return {'posts by this user': post_by_user}
+async def get_posts_by_user(user_id: int, service: Annotated[PostService, Depends(PostService)]):
+    return await service.get_users_posts(user_id)
 
 
 

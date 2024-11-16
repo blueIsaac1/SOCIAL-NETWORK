@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends # type: ignore
 from src.api.dtos.users import UserRegistrations, UserLogin
 from src.services.user import UserService
 from typing import Annotated
@@ -26,10 +26,11 @@ async def login(body: UserLogin, service: Annotated[UserService, Depends(UserSer
         email = body.email,
         password = body.password
     )
+    print(body.email, body.password)
 
-    return {'sucess': login_user}
+    return {'zz': login_user}
 
 @router.get('/get-users')
-async def get_users(service: Annotated[UserService, Depends(UserService)]):
-    return service.get_all_users()
+async def get_all_users(service: Annotated[UserService, Depends(UserService)]):
+    return await service.get_all_users()
 

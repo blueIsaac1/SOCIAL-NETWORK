@@ -17,7 +17,8 @@ class UserService:
         )
         return user
     
-    async def login(self, email: str, password:str):
+    async def login(self, email: str, password:str):       
+        user = None 
         try: 
             user = await UserModel.get(email=email)
         except Exception:
@@ -25,3 +26,8 @@ class UserService:
 
         if user.password != password:
             raise login_wrong_exception()
+        
+        return user
+        
+    async def get_all_users(self):
+        return await UserModel.all()
