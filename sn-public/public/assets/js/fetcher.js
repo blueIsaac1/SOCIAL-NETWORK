@@ -1,11 +1,13 @@
-export const Fecther = async (configfetch) => {
-    const r = await fetch(configfetch.url, {
-        method: configfetch.method,
+const BASE_API = "http://localhost:8000"
+
+export const Fecther = async (configFetch) => {
+    const r = await fetch(BASE_API + configFetch.url, {
+        method: configFetch.method,
         headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('__token'),
         },
-        body: configfetch.data ? JSON.stringify(configfetch.data):null
+        body: configFetch.data ? JSON.stringify(configFetch.data):null
     })
     const response = await r.json();
 

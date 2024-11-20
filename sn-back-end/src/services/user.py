@@ -30,4 +30,17 @@ class UserService:
         return user
         
     async def get_all_users(self):
-        return await UserModel.all()
+        try:
+            user = UserModel.all()
+        except Exception as e:
+            return e
+        
+        return await user
+    
+    async def get_mini_user(self, user_id: int):
+        try:
+            mini_user = UserModel.get(id=user_id)
+        except Exception as e:
+            return e
+        
+        return await mini_user.values()

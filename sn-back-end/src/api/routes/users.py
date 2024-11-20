@@ -34,3 +34,7 @@ async def login(body: UserLogin, service: Annotated[UserService, Depends(UserSer
 async def get_all_users(service: Annotated[UserService, Depends(UserService)]):
     return await service.get_all_users()
 
+@router.get('/get-mini-user/{user_id}')
+async def get_mini_user(user_id: int, service: Annotated[UserService, Depends(UserService)]):
+    return await service.get_mini_user(user_id)
+

@@ -11,3 +11,4 @@ class UserModel(ModelBase):
     email = fields.CharField(max_length=100, unique=True)
     password = fields.TextField()
     token = fields.TextField(default=generate_token)
+    image_pic = fields.TextField(default="https://avatar.iran.liara.run/public", blank=True, null=True)
